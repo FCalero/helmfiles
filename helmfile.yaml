@@ -1,0 +1,24 @@
+repositories:
+  - name: opentelemetry-demo
+    url: https://open-telemetry.github.io/opentelemetry-helm-charts
+
+releases:
+  - name: my-otel-demo
+    namespace: default
+    chart: open-telemetry/opentelemetry-demo
+    values:
+      - otel-demo-values.yaml
+      - opentelemetry-collector:
+          config:
+            extensions:
+              basicauth/grafana_cloud:
+                # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/extension/basicauthextension
+                client_auth:
+                  username: {{ requiredEnv "GRAFANA_USER" | quote }}
+                  password: {{ requiredEnv "GRAFANA_PASSWORD" }}
+            exporters:
+              otlphttp/grafana_cloud:
+                # https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/otlpexporter
+                endpoint: {{ requiredEnv "GRAFANA_ENDPOINT" }}
+                auth:
+                  authenticator: basicauth/grafana_cloud

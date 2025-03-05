@@ -1,0 +1,11 @@
+.terraform
+.terraform.lock.hcl
+.DS_Store
+.vscode
+.env
+*.tfstate
+*.tfstate.backup
+target/
+__pycache__/
+node_modules/
+.idea/
