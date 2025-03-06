@@ -57,6 +57,3 @@ opentelemetry-collector:
         logs:
           processors: [memory_limiter, resource, transform/drop_k8s_keys, batch]
           exporters: [opensearch, debug, otlphttp/grafana_cloud]
-
-opensearch:
-  enabled: false
