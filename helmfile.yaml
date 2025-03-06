@@ -1,11 +1,7 @@
-repositories:
-  - name: opentelemetry-demo
-    url: https://open-telemetry.github.io/opentelemetry-helm-charts
-
 releases:
   - name: my-otel-demo
     namespace: default
-    chart: open-telemetry/opentelemetry-demo
+    chart: oci://ghcr.io/open-telemetry/opentelemetry-demo
     values:
       - otel-demo-values.yaml
       - opentelemetry-collector:
