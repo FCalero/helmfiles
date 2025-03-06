@@ -11,11 +11,14 @@ releases:
               basicauth/grafana_cloud:
                 # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/extension/basicauthextension
                 client_auth:
-                  username: {{ requiredEnv "GRAFANA_USER" | quote }}
-                  password: {{ requiredEnv "GRAFANA_PASSWORD" }}
+                  username: {{ requiredEnv "GRAFANA_STACK_id" | quote }}
+                  password: {{ requiredEnv "GRAFANA_STACK_TOKEN_publisher" }}
             exporters:
               otlphttp/grafana_cloud:
                 # https://github.com/open-telemetry/opentelemetry-collector/tree/main/exporter/otlpexporter
-                endpoint: {{ requiredEnv "GRAFANA_ENDPOINT" }}
+                endpoint: {{ printf "%s/otlp" (requiredEnv "GRAFANA_STACK_otlp_url")}}
                 auth:
                   authenticator: basicauth/grafana_cloud
+    wait: true
+    cleanupOnFail: true
+    atomic: true
